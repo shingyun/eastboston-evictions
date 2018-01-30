@@ -1,0 +1,58 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Minion Pro', 'New Times Romen', 'serif';
+  
+}
+
+*:focus{
+  border: none !important;
+  outline: 0 !important;
+}
+
+html,body{
+  height:100%;
+}
+
+body{
+  background-color:  rgb(252,252,252);
+  color: #333;
+}
+
+.container{
+  margin-left: 0px;
+  margin-right: 0px; 
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+h1{
+
+}
+
+.row{
+  padding-bottom:30px;
+}
+
+.plot-0{
+  height:100vh;
+}
+
+#sidebar{
+  padding-top:30px;
+}
+
+#sidebar p{
+  word-wrap: break-word;
+}
+
+.trigger{
+  padding-bottom:80%;
+}
+
+
+
+
+
+
+
