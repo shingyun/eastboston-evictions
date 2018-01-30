@@ -39,12 +39,13 @@ function ForceLayout(){
                 .force('forceX',forceX)
                 .force('forceY',forceY)
                 .force('collide',collide)
-                // .restart()
-                // .alpha(1)
+                .restart()
+                .alpha(1)
                 .on('tick',function(){
                     //Update
                     circle.merge(circleEnter)
-                          .style('fill','red')
+                          .style('fill','#666')
+                          .style('opacity',0.8)
                           .attr('cx', function(d){
                             return d.x
                           })
