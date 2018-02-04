@@ -2,6 +2,7 @@
   margin: 0px;
   padding: 0px;
   font-family: 'Minion Pro', 'New Times Romen', 'serif';
+  position: relative;
   
 }
 
@@ -47,12 +48,21 @@ h1{
 }
 
 .trigger{
-  padding-bottom:80%;
+  padding-top:30%;
+  padding-bottom:60%;
 }
 
+.baseMap {
+  opacity: 0;
+}
 
+.censusMap {
+  opacity: 0;
+}
 
-
-
+.row-2 .fixed {
+  position: fixed;
+  top:0;
+}
 
 

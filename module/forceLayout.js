@@ -28,11 +28,17 @@ function ForceLayout(){
                 .enter()
                 .append('circle')
                 .attr('class','circle')
-                .attr('r',6)
+                .attr('r',_r)
+                .style('fill','#111')
+                .style('opacity',0.7);
+
+            circle.exit().remove();
 
             if (!simulation) {
               simulation = d3.forceSimulation(nodes);
             }
+
+            // var simulation = d3.forceSimulation(nodes);
 
             force = simulation
                 .force('charge',charge)
@@ -42,21 +48,18 @@ function ForceLayout(){
                 .restart()
                 .alpha(1)
                 .on('tick',function(){
-                    //Update
-                    circle.merge(circleEnter)
-                          .style('fill','#666')
-                          .style('opacity',0.8)
+
+                    plot.selectAll('circle')
                           .attr('cx', function(d){
                             return d.x
                           })
                           .attr('cy',function(d){
                             return d.y
-                          });;
-
+                          });
                     
                 });//tick
             
-            circle.exit().remove();
+
 
         }//exports
 
