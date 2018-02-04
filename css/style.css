@@ -1,6 +1,7 @@
 * {
   margin: 0px;
   padding: 0px;
+  font-family: 'Minion Pro', 'New Times Romen', 'serif';
   position: relative;
   
 }
@@ -16,6 +17,7 @@ html,body{
 
 body{
   background-color:  rgb(252,252,252);
+  color: #333;
 }
 
 .container{
@@ -23,6 +25,10 @@ body{
   margin-right: 0px; 
   padding-top: 50px;
   padding-bottom: 50px;
+}
+
+h1{
+
 }
 
 .row{
@@ -54,9 +60,9 @@ body{
   opacity: 0;
 }
 
-.fixed {
+.row-2 .fixed {
   position: fixed;
-  top:0 ;
+  top:0;
 }
 
 

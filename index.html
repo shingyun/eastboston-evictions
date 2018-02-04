@@ -1,8 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Evictions in East Boston</title>
-    <link href="./style.css" rel="stylesheet"/>
+    <!-- Basic Page Needs-->
+    <meta charset="utf-8">
+    <title>The Margins-Article</title>
+    <meta name='description' content=''>
+    <meta name='author' content=''>
+    <!-- Mobile Specific Metas-->
+    <meta name='viewport' content='width = device-width, initial-scale=1'>
+     <!-- FONT -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+     <!-- CSS -->
+    <link href="css/EastBoston_styles.css" rel="stylesheet"/>
+    <link href="css/normalize.css" rel="stylesheet"/>
+    <link href="css/skeleton.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
     <script
@@ -16,48 +30,76 @@
 </head>
 
 <body>
+
+<!-- Hamburger menu -->
+<nav role = 'navigation' class = 'EastBoston_nav'>
+    <div id = 'menuToggle'>
+	    <!--
+	    A fake / hidden checkbox is used as click reciever,
+	    so you can use the :checked selector on it.
+	    -->
+	    <input type = 'checkbox' >
+	    <!--Some spans to act as a hamburger-->
+	    <span></span>
+	    <span></span>
+	    <span></span>
+	    
+	    <ul id = 'menu'>
+	        <a href = "#"><li style="font-size:4rem">Article 1</li></a>
+	        <a href = "#"><li style="font-size:4rem">Article 2</li></a>
+	        <a href = "#"><li style="font-size:4rem">Article 3</li></a>
+	        <a href = "#"><li style="font-size:4rem">Article 4</li></a>
+	        <a href = "#"><li style="font-size:4rem">Article 5</li></a>
+	        <a href = "#"><li style="font-size:4rem">Article 6</li></a>
+	    </ul>
+    </div>
+</nav>
+
 <div class = 'container'>
-	<div class = 'row row-1'>
-	    <div class = 'col-sm-1 col-md-1 col-lg-1'></div>
-	    <div class = 'col-sm-10 col-md-10 col-lg-10'>
-	        <h1 id = 'headline'>Evictions in East Boston</h1>
-	        <p id = 'intro'>Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction</p>
-	        	    	<div class = 'row row-2' id = 'trigger-1'>
-	    	    <div class = 'plot-0 col-sm-6 col-md-6 col-lg-6' id = 'plot'></div>
-	    	    <div class = 'col-sm-1 col-md-1 col-lg-1' id = 'space'></div>
-	    	    <div class = 'col-sm-5 col-md-5 col-lg-5' id = 'sidebar'>
-<!-- 	    	        <btn class = 'btn' id = 'btn-reason'>Reason</btn>
-	    	        <btn class = 'btn' id = 'btn-income'>Income</btn>
-	    	        <btn class = 'btn' id = 'btn-race'>Race</btn> -->
-	    	    	<div class = 'trigger'>
-	    	    		<h4 class = 'subtitle' id = 'trigger-2'>There were 163 evictions in housing court report in 2014</h4>
-	    	    		<p class = 'des'>desdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdes</p>
-	    	    	</div>
-	    	    	<div class = 'trigger'>
-	    	    		<h4 class = 'subtitle' id = 'trigger-3'>Housing reant is the main reason</h4>
-	    	    		<p class = 'des'>desdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdes</p>
-	    	    	</div>
-	    	    	<div class = 'trigger'>
-	    	    		<h4 class = 'subtitle' id = 'trigger-4'>Income</h4>
-	    	    		<p class = 'des'>desdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdes</p>
-	    	    	</div>
-	    	    	<div class = 'trigger'>
-	    	    		<h4 class = 'subtitle' id = 'trigger-5'>Race</h4>
-	    	    		<p class = 'des'>desdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdes</p>
-	    	    	</div>	   	    	
-	    	    </div>
-	    	</div>	
+	<div class = 'row'>
+	  <div class="column EastBoston">
+	    <div class = 'row'>
+		    <div class = 'col-sm-1 col-md-1 col-lg-1'></div>
+		    <div class = 'col-sm-10 col-md-10 col-lg-10'>
+		        <h1 class = 'EastBoston_head'>Evictions in East Boston</h1>
+		        <p id = 'intro'>Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction </p>
+		        <h5 class = 'EastBoston_byline'>By Shing-Yun Chiang</h5>
+		        <div class = 'row row2'>
+		    	    <div class = 'plotot-0 col-sm-6 col-md-6 col-lg-6' id = 'plot'></div>
+		    	    <div class = 'col-sm-1 col-md-1 col-lg-1' id = 'space'></div>
+		    	    <div class = 'col-sm-5 col-md-5 col-lg-5' id = 'sidebar'>
+	<!-- 	    	        <btn class = 'btn' id = 'btn-reason'>Reason</btn>
+		    	        <btn class = 'btn' id = 'btn-income'>Income</btn>
+		    	        <btn class = 'btn' id = 'btn-race'>Race</btn> -->
+		    	    	<div class = 'trigger' id = 'trigger-2'>
+		    	    		<h2 class = 'subtitle EastBoston_head'>161 evictions in 2014</h2>
+		    	    		<p class = 'des'>desdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdes</p>
+		    	    	</div>
+		    	    	<div class = 'trigger' id = 'trigger-3'>
+		    	    		<h2 class = 'subtitle EastBoston_head''>Housing reant is the main reason</h2>
+		    	    		<p class = 'des'>desdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdes</p>
+		    	    	</div>
+		    	    	<div class = 'trigger' id = 'trigger-4'>
+		    	    		<h2 class = 'subtitle EastBoston_head'>Income</h2>
+		    	    		<p class = 'des'>desdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdes</p>
+		    	    	</div>
+		    	    	<div class = 'trigger' id = 'trigger-5'>
+		    	    		<h2 class = 'subtitle EastBoston_head'>Race</h2>
+		    	    		<p class = 'des'>desdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdes</p>
+		    	    	</div>	   	    	
+		    	    </div>
+		    	</div>	
+		    </div>
 	    </div>
 	    <div class = 'col-sm-1 col-md-1 col-lg-1'></div>
+	  </div>
 	</div>
-
 </div>
-
+<h6 class="EastBoston_footer"><span class="EastBoston_footer">Visualizing Eastie</span> is a project of the <a href="https://www.northeastern.edu/visualization/">Information Design and Visualization program</a> at Northeastern University. © 2018</h6>
 
 <script src="d3.js"></script>
-<script src="affix.js"></script>
-<script src="module/forceLayout.js"></script>
-<script src="script.js"></script>
+<script src="js/scroll.js"></script>
+<script src="js/script.js"></script>
 
 </body>
 </html>
