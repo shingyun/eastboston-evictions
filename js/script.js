@@ -4,9 +4,9 @@ var w = document.getElementById('plot').clientWidth,
 
 var plot = d3.select('#plot').append('svg')
     .attr('width',w)
-    .attr('height',h-100)
+    .attr('height',h-75)
     .append('g')
-    .attr('transform','translate(0,100)');
+    .attr('transform','translate(0,50)');
 
 var projection = d3.geoMercator(),
     path = d3.geoPath().projection(projection);
@@ -77,20 +77,20 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 		    .style('opacity',0.8);
 
 
-    d3.select('#btn-reason').on('click',function(){
-    	   d3.select('.baseMap')
-    	     .transition().duration(500)
-    	     .style('opacity',0)
+    // d3.select('#btn-reason').on('click',function(){
+    // 	   d3.select('.baseMap')
+    // 	     .transition().duration(500)
+    // 	     .style('opacity',0)
     	   
-    	   d3.select('.censusMap')
-    	     .transition().duration(500)
-    	     .style('opacity',0)
+    // 	   d3.select('.censusMap')
+    // 	     .transition().duration(500)
+    // 	     .style('opacity',0)
 
-           plot.selectAll('circle')
-               .transition().duration(500)
-               .attr('cx',function(d){return d.reason_x*3 + 50})
-               .attr('cy',function(d){return d.reason_y*2 + 80})
-    })
+    //        plot.selectAll('circle')
+    //            .transition().duration(500)
+    //            .attr('cx',function(d){return d.reason_x*3 + 50})
+    //            .attr('cy',function(d){return d.reason_y*2 + 80})
+    // })
 
 
     //set lat long position for every circle
@@ -147,6 +147,11 @@ function dataLoaded(err, eviction, demo, geo, bos) {
     //            .attr('cy',function(d){return d.y+3100})
     // })
 
+    $('#plot').affix({
+        offset: {
+            top: $('#plot').offset().top
+        }
+    });
 
     var circle = plot
         .selectAll('.circle')
@@ -162,8 +167,6 @@ function dataLoaded(err, eviction, demo, geo, bos) {
         .style('stroke','#fff')
         .style('fill','#111')
         .style('opacity',0.5);
-
-
 
 
     var sceneA = new ScrollMagic.Scene({
@@ -185,8 +188,8 @@ function dataLoaded(err, eviction, demo, geo, bos) {
     	     .style('opacity',0)
 
 		    circleEnter
-		        .attr('cx',function(d){return d.init_x*3 + 50})
-		        .attr('cy',function(d){return d.init_y*3 + 50})
+		        .attr('cx',function(d){return d.init_x*2.75 + 50})
+		        .attr('cy',function(d){return d.init_y*2.75 + 50})
 
 	        console.log('Trigger 1')
 		})
@@ -212,8 +215,8 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 
            plot.selectAll('circle')
                .transition().duration(500)
-               .attr('cx',function(d){return d.reason_x*3 + 50})
-               .attr('cy',function(d){return d.reason_y*2 + 80})
+               .attr('cx',function(d){return d.reason_x*2.75 + 50})
+               .attr('cy',function(d){return d.reason_y*2 + 100})
 
 		    console.log('Trigger 2')
         })

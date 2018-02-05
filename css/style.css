@@ -1,14 +1,6 @@
 * {
   margin: 0px;
   padding: 0px;
-  font-family: 'Minion Pro', 'New Times Romen', 'serif';
-  position: relative;
-  
-}
-
-*:focus{
-  border: none !important;
-  outline: 0 !important;
 }
 
 html,body{
@@ -17,7 +9,6 @@ html,body{
 
 body{
   background-color:  rgb(252,252,252);
-  color: #333;
 }
 
 .container{
@@ -25,10 +16,6 @@ body{
   margin-right: 0px; 
   padding-top: 50px;
   padding-bottom: 50px;
-}
-
-h1{
-
 }
 
 .row{
@@ -41,6 +28,8 @@ h1{
 
 #sidebar{
   padding-top:30px;
+  position: absolute;
+  right: 0;
 }
 
 #sidebar p{
@@ -48,9 +37,15 @@ h1{
 }
 
 .trigger{
-  padding-top:30%;
-  padding-bottom:60%;
+  padding-top:35%;
+  padding-bottom:50%;
 }
+
+.trigger p{
+  word-wrap: break-word;
+  min-width: 30%;
+}
+
 
 .baseMap {
   opacity: 0;
@@ -60,9 +55,13 @@ h1{
   opacity: 0;
 }
 
-.row-2 .fixed {
+.fixed {
   position: fixed;
-  top:0;
+  top: 0;
 }
 
-
+.footer {
+  width: 100%;
+  position: absolute;
+  top: 2500px;
+}

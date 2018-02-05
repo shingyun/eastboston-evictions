@@ -17,7 +17,7 @@
     <link href="css/normalize.css" rel="stylesheet"/>
     <link href="css/skeleton.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
     <script
      src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -25,7 +25,7 @@
      crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
 </head>
 
@@ -62,10 +62,11 @@
 		    <div class = 'col-sm-1 col-md-1 col-lg-1'></div>
 		    <div class = 'col-sm-10 col-md-10 col-lg-10'>
 		        <h1 class = 'EastBoston_head'>Evictions in East Boston</h1>
-		        <p id = 'intro'>Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction Introduction </p>
+		        <p id = 'intro'></p>
 		        <h5 class = 'EastBoston_byline'>By Shing-Yun Chiang</h5>
 		        <div class = 'row row2'>
-		    	    <div class = 'plotot-0 col-sm-6 col-md-6 col-lg-6' id = 'plot'></div>
+		    	    <div class = 'plot-0 col-sm-6 col-md-6 col-lg-6' id = 'plot' data-spy = 'affix'  data-offset-top = '350'></div>
+		    	    <!--data-spy = 'affix'  data-offset-top = '100'-->
 		    	    <div class = 'col-sm-1 col-md-1 col-lg-1' id = 'space'></div>
 		    	    <div class = 'col-sm-5 col-md-5 col-lg-5' id = 'sidebar'>
 	<!-- 	    	        <btn class = 'btn' id = 'btn-reason'>Reason</btn>
@@ -76,7 +77,7 @@
 		    	    		<p class = 'des'>desdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdes</p>
 		    	    	</div>
 		    	    	<div class = 'trigger' id = 'trigger-3'>
-		    	    		<h2 class = 'subtitle EastBoston_head''>Housing reant is the main reason</h2>
+		    	    		<h2 class = 'subtitle EastBoston_head'>Housing rent is the main reason</h2>
 		    	    		<p class = 'des'>desdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdesdes</p>
 		    	    	</div>
 		    	    	<div class = 'trigger' id = 'trigger-4'>
@@ -95,9 +96,12 @@
 	  </div>
 	</div>
 </div>
-<h6 class="EastBoston_footer"><span class="EastBoston_footer">Visualizing Eastie</span> is a project of the <a href="https://www.northeastern.edu/visualization/">Information Design and Visualization program</a> at Northeastern University. © 2018</h6>
+<div class = 'footer'>
+    <h6 class = 'EastBoston_footer'><span class="EastBoston_footer">Visualizing Eastie</span> is a project of the <a href="https://www.northeastern.edu/visualization/">Information Design and Visualization program</a> at Northeastern University. © 2018</h6>
+</div>
 
 <script src="d3.js"></script>
+<script src="js/affix.js"></script>
 <script src="js/scroll.js"></script>
 <script src="js/script.js"></script>
 
