@@ -24,12 +24,13 @@ body{
 
 .plot-0{
   height:100vh;
+  min-width: 500px;
 }
 
 #sidebar{
   padding-top:30px;
-  position: absolute;
-  right: 0;
+  float: right;
+  max-width: 450px;
 }
 
 #sidebar p{
@@ -60,8 +61,3 @@ body{
   top: 0;
 }
 
-.footer {
-  width: 100%;
-  position: absolute;
-  top: 2500px;
-}

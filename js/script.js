@@ -77,22 +77,6 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 		    .style('opacity',0.8);
 
 
-    // d3.select('#btn-reason').on('click',function(){
-    // 	   d3.select('.baseMap')
-    // 	     .transition().duration(500)
-    // 	     .style('opacity',0)
-    	   
-    // 	   d3.select('.censusMap')
-    // 	     .transition().duration(500)
-    // 	     .style('opacity',0)
-
-    //        plot.selectAll('circle')
-    //            .transition().duration(500)
-    //            .attr('cx',function(d){return d.reason_x*3 + 50})
-    //            .attr('cy',function(d){return d.reason_y*2 + 80})
-    // })
-
-
     //set lat long position for every circle
 	eviction.forEach((d) => {
 	    var xy = projection([d.long, d.lat]);
@@ -100,52 +84,6 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 	        d.y = xy[1];
 	})
 
-    // d3.select('#btn-income').on('click',function(){
-
-    // 	   d3.select('.baseMap')
-    // 	     .transition().duration(500)
-    // 	     .style('opacity',1)
-    	   
-    // 	   d3.select('.censusMap')
-    // 	     .transition().duration(500)
-    // 	     .style('opacity',1)
-
-    // 	   plot.selectAll('.censusTract')
-    // 	       .transition().duration(500)
-    // 	       .style('fill',function(d){
-		  //   	 var incomeMapping = dataMapping.get(d.properties.geoid).median_household_income
-		  //   	 // var raceMapping = dataMapping.get(d.properties.geoid).percentage_hispanic_latino
-    //              return scaleColorIncome(incomeMapping);
-		  //       })
-
-    //        plot.selectAll('circle')
-    //            .transition().duration(500)
-    //            .attr('cx',function(d){return d.x-75})
-    //            .attr('cy',function(d){return d.y+3100})
-    // })
-
-    // d3.select('#btn-race').on('click',function(){
-
-    // 	   d3.select('.baseMap')
-    // 	     .transition().duration(500)
-    // 	     .style('opacity',1)
-    	   
-    // 	   d3.select('.censusMap')
-    // 	     .transition().duration(500)
-    // 	     .style('opacity',1)
-
-    // 	   plot.selectAll('.censusTract')
-    // 	       .transition().duration(500)
-    // 	       .style('fill',function(d){
-		  //   	 // var incomeMapping = dataMapping.get(d.properties.geoid).median_household_income
-		  //   	 var raceMapping = dataMapping.get(d.properties.geoid).percentage_hispanic_latino
-    //              return scaleColorRace(raceMapping);
-		  //       })
-    // 	   plot.selectAll('circle')
-    //            .transition().duration(500)
-    //            .attr('cx',function(d){return d.x-75})
-    //            .attr('cy',function(d){return d.y+3100})
-    // })
 
     $('#plot').affix({
         offset: {
@@ -171,10 +109,11 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 
     var sceneA = new ScrollMagic.Scene({
     	  triggerElement: '#trigger-1', 
-    	  offset: -(document.documentElement.clientHeight),
+    	  // offset: -(document.documentElement.clientHeight),
     	  triggerHook: 0,
     	  reverse: true
         })
+        // .addIndicators()
         .on('start', function(){
 
            d3.select('#plot').classed('fixed',false);
@@ -201,6 +140,7 @@ function dataLoaded(err, eviction, demo, geo, bos) {
     	  triggerHook: 0,
     	  reverse: true
         })
+        // .addIndicators()
         .on('start', function(){
 
            d3.select('#plot').classed('fixed',true);
@@ -227,6 +167,7 @@ function dataLoaded(err, eviction, demo, geo, bos) {
     	  triggerHook: 0,
     	  reverse: true
         })
+        // .addIndicators()
         .on('start', function(){
 
     	   d3.select('.baseMap')
@@ -260,6 +201,7 @@ function dataLoaded(err, eviction, demo, geo, bos) {
     	  triggerHook: 0,
     	  reverse: true
         })
+        // .addIndicators()
         .on('start', function(){
 
     	   d3.select('.baseMap')
