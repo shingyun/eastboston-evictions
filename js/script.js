@@ -15,17 +15,31 @@ projection
 	.center([-71,42])
 	.scale(350000);
 
-var colorLowPoint = '#ffffff',
+//Color scale
+var colorLowIncome = '#D0DFEC',
     colorHightIncome = '#4682B4',
+    colorLowRace = '#EBC7C7',
     colorHightRace = '#B22222';
 
-var scaleColorIncome = d3.scaleLinear()
-    .range([colorLowPoint,colorHightIncome])
+var incomeThreshold = 24000
 
-var scaleColorRace = d3.scaleLinear()
-    .range([colorLowPoint,colorHightRace])
+var scaleColorIncome = d3.scaleThreshold()
+    .domain([incomeThreshold,incomeThreshold*2,incomeThreshold*3,incomeThreshold*4,incomeThreshold*5])
+    .range([colorLowIncome,'#ADC7DE','#8BB0D0','#6899C3',colorHightIncome])
 
+var scaleColorRace = d3.scaleThreshold()
+    .domain([0.2,0.4,0.6,0.8,1.0])
+    .range([colorLowRace,'#DC9D9D','#CE7474','#C04B4B',colorHightRace])
+
+//Set ScrollMagic controller
 var controller = new ScrollMagic.Controller();
+
+//make plot fixed
+$('#plot').affix({
+    offset: {
+       top: $('#plot').offset().top
+    }
+});
 
 d3.queue()
   .defer(d3.csv,'data/eviction_EB_latlong.csv', parseEviction)
@@ -33,14 +47,10 @@ d3.queue()
   .defer(d3.json,'data/eastBostonCensusTracts.geojson')
   .defer(d3.json,'data/Boston_Neighborhoods.geojson')
   .await(dataLoaded);
-  //
  
 function dataLoaded(err, eviction, demo, geo, bos) {
 
     var dataMapping = d3.map(demo, function(d){ return d.geoid });
-
-    scaleColorIncome.domain(d3.extent(demo,function(d){return d.median_household_income}))
-    scaleColorRace.domain([0,1])
 
     //basemap
     plot.append('g')
@@ -76,6 +86,43 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 		    .style('stroke','white')
 		    .style('opacity',0.8);
 
+    reason = d3.nest().key(function(d){return d.reason})
+        .entries(eviction);
+
+    console.log(reason);
+
+    //TEXT for reason
+    plot.append('text')
+        .attr('class','reasonText')
+        .style('font-family','BentonSansCond-Regular, Helvetica, sans-serif')
+        .style('font-size','16px')
+        .text('114 Overdue Rent')
+        .attr('x', 42.5)
+        .attr('y', 85);
+
+    plot.append('text')
+        .attr('class','reasonText')
+        .style('font-family','BentonSansCond-Regular, Helvetica, sans-serif')
+        .style('font-size','16px')
+        .text('9 Combination of Factors')
+        .attr('x', 42.5)
+        .attr('y', 305);
+
+    plot.append('text')
+        .attr('class','reasonText')
+        .style('font-family','BentonSansCond-Regular, Helvetica, sans-serif')
+        .style('font-size','16px')
+        .text('36 Other')
+        .attr('x', 42.5)
+        .attr('y', 365);
+
+    plot.append('text')
+        .attr('class','reasonText')
+        .style('font-family','BentonSansCond-Regular, Helvetica, sans-serif')
+        .style('font-size','16px')
+        .text('2 Unknown')
+        .attr('x', 42.5)
+        .attr('y', 465);
 
     //set lat long position for every circle
 	eviction.forEach((d) => {
@@ -84,13 +131,7 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 	        d.y = xy[1];
 	})
 
-
-    $('#plot').affix({
-        offset: {
-            top: $('#plot').offset().top
-        }
-    });
-
+    // Plot circle
     var circle = plot
         .selectAll('.circle')
         .data(eviction);
@@ -107,9 +148,9 @@ function dataLoaded(err, eviction, demo, geo, bos) {
         .style('opacity',0.5);
 
 
+    //Scene of all
     var sceneA = new ScrollMagic.Scene({
     	  triggerElement: '#trigger-1', 
-    	  // offset: -(document.documentElement.clientHeight),
     	  triggerHook: 0,
     	  reverse: true
         })
@@ -117,6 +158,7 @@ function dataLoaded(err, eviction, demo, geo, bos) {
         .on('start', function(){
 
            d3.select('#plot').classed('fixed',false);
+           d3.selectAll('.reasonText').style('visibility','hidden');
 
     	   d3.select('.baseMap')
     	     .transition().duration(500)
@@ -136,7 +178,6 @@ function dataLoaded(err, eviction, demo, geo, bos) {
     //Reason
     var sceneB = new ScrollMagic.Scene({
     	  triggerElement: '#trigger-2', 
-    	  // offset: -(document.documentElement.clientHeight),
     	  triggerHook: 0,
     	  reverse: true
         })
@@ -144,6 +185,7 @@ function dataLoaded(err, eviction, demo, geo, bos) {
         .on('start', function(){
 
            d3.select('#plot').classed('fixed',true);
+           d3.selectAll('.reasonText').style('visibility','visible');
 
     	   d3.select('.baseMap')
     	     .transition().duration(500)
@@ -163,12 +205,13 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 
     var sceneC = new ScrollMagic.Scene({
     	  triggerElement: '#trigger-3', 
-    	  // offset: -(document.documentElement.clientHeight),
     	  triggerHook: 0,
     	  reverse: true
         })
         // .addIndicators()
         .on('start', function(){
+
+           d3.selectAll('.reasonText').style('visibility','hidden');
 
     	   d3.select('.baseMap')
     	     .transition().duration(500)
@@ -178,12 +221,17 @@ function dataLoaded(err, eviction, demo, geo, bos) {
     	     .transition().duration(500)
     	     .style('opacity',1)
 
+
     	   plot.selectAll('.censusTract')
     	       .transition().duration(500)
     	       .style('fill',function(d){
 		    	 var incomeMapping = dataMapping.get(d.properties.geoid).median_household_income
-		    	 // var raceMapping = dataMapping.get(d.properties.geoid).percentage_hispanic_latino
-                 return scaleColorIncome(incomeMapping);
+                 console.log(incomeMapping)
+                 if(incomeMapping == 0){
+                   return '#d3d3d3';
+                 } else {
+                   return scaleColorIncome(incomeMapping);
+                 }
 		        })
 
            plot.selectAll('circle')
@@ -197,7 +245,6 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 
     var sceneD = new ScrollMagic.Scene({
     	  triggerElement: '#trigger-4', 
-    	  // offset: -(document.documentElement.clientHeight),
     	  triggerHook: 0,
     	  reverse: true
         })
@@ -215,7 +262,6 @@ function dataLoaded(err, eviction, demo, geo, bos) {
     	   plot.selectAll('.censusTract')
     	       .transition().duration(500)
     	       .style('fill',function(d){
-		    	 // var incomeMapping = dataMapping.get(d.properties.geoid).median_household_income
 		    	 var raceMapping = dataMapping.get(d.properties.geoid).percentage_hispanic_latino
                  return scaleColorRace(raceMapping);
 		        })
