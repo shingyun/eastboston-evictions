@@ -38,14 +38,13 @@ body{
 
 .trigger{
   padding-top:35%;
-  padding-bottom:50%;
+  padding-bottom:90%;
 }
 
 .trigger p{
   word-wrap: break-word;
   min-width: 30%;
 }
-
 
 .baseMap {
   opacity: 0;
@@ -61,6 +60,13 @@ body{
 }
 
 .reasonText {
+  visibility: hidden;
+}
+
+img.key {
+  position: absolute;
+  width: 270px;
+  top: 50px;
   visibility: hidden;
 }
 

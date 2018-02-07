@@ -64,8 +64,8 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 	        .attr('d',path)
 		    .style('fill','none')
 		    .style('stroke-width','1px')
-		    .style('stroke','#969696')
-		    .style('opacity',0.8);
+		    .style('stroke','#666666')
+		    .style('opacity',0.85);
     
     //east Boston
     plot.append('g')
@@ -82,9 +82,9 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 		    	 //var raceMapping = dataMapping.get(d.properties.geoid).percentage_hispanic_latino
                  return scaleColorIncome(incomeMapping);
 		    })
-		    .style('stroke-width','2px')
+		    .style('stroke-width','1.5px')
 		    .style('stroke','white')
-		    .style('opacity',0.8);
+		    .style('opacity',0.85);
 
     reason = d3.nest().key(function(d){return d.reason})
         .entries(eviction);
@@ -145,7 +145,7 @@ function dataLoaded(err, eviction, demo, geo, bos) {
         .style('stroke-width','0.5px')
         .style('stroke','#fff')
         .style('fill','#111')
-        .style('opacity',0.5);
+        .style('opacity',0.6);
 
 
     //Scene of all
@@ -186,6 +186,7 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 
            d3.select('#plot').classed('fixed',true);
            d3.selectAll('.reasonText').style('visibility','visible');
+           d3.select('#key_income').style('visibility','hidden');
 
     	   d3.select('.baseMap')
     	     .transition().duration(500)
@@ -212,6 +213,8 @@ function dataLoaded(err, eviction, demo, geo, bos) {
         .on('start', function(){
 
            d3.selectAll('.reasonText').style('visibility','hidden');
+           d3.select('#key_income').style('visibility','visible');
+           d3.select('#key_race').style('visibility','hidden');
 
     	   d3.select('.baseMap')
     	     .transition().duration(500)
@@ -220,7 +223,6 @@ function dataLoaded(err, eviction, demo, geo, bos) {
     	   d3.select('.censusMap')
     	     .transition().duration(500)
     	     .style('opacity',1)
-
 
     	   plot.selectAll('.censusTract')
     	       .transition().duration(500)
@@ -250,6 +252,9 @@ function dataLoaded(err, eviction, demo, geo, bos) {
         })
         // .addIndicators()
         .on('start', function(){
+
+           d3.select('#key_income').style('visibility','hidden');
+           d3.select('#key_race').style('visibility','visible');
 
     	   d3.select('.baseMap')
     	     .transition().duration(500)
