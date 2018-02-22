@@ -41,6 +41,13 @@ $('#plot').affix({
     }
 });
 
+//texture
+// var t = textures.lines()
+//   .thicker();
+
+// plot.call(t);
+
+
 d3.queue()
   .defer(d3.csv,'data/eviction_EB_latlong.csv', parseEviction)
   .defer(d3.csv,'data/demographic_data.csv', parseDemo)
@@ -267,9 +274,13 @@ function dataLoaded(err, eviction, demo, geo, bos) {
     	   plot.selectAll('.censusTract')
     	       .transition().duration(500)
     	       .style('fill',function(d){
-		    	 var raceMapping = dataMapping.get(d.properties.geoid).percentage_hispanic_latino
-                 return scaleColorRace(raceMapping);
-		        })
+    		    	var raceMapping = dataMapping.get(d.properties.geoid).percentage_hispanic_latino
+                    if(raceMapping == 0){
+                      return '#d3d3d3';
+                    } else {
+                      return scaleColorRace(raceMapping);
+                    }
+		       })
     	   plot.selectAll('circle')
                .transition().duration(500)
                .attr('cx',function(d){return d.x-75})
