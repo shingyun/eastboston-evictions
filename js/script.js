@@ -8,6 +8,7 @@ var plot = d3.select('#plot').append('svg')
     .append('g')
     .attr('transform','translate(0,50)');
 
+//projection
 var projection = d3.geoMercator(),
     path = d3.geoPath().projection(projection);
 
@@ -17,19 +18,31 @@ projection
 
 //Color scale
 var colorLowIncome = '#D0DFEC',
-    colorHightIncome = '#4682B4',
+    colorHighIncome = '#4682B4',
     colorLowRace = '#EBC7C7',
-    colorHightRace = '#B22222';
+    colorHighRace = '#B22222',
+    colorLowRent = 'C5D6CC',
+    colorHighRent = '195E35';
 
-var incomeThreshold = 24000
+var incomeThreshold = 24000,
+    rentThreshold = 420;
+
+var scaleColorRent = d3.scaleThreshold()
+    .domain([rentThreshold, rentThreshold*2, rentThreshold*3, rentThreshold*4, rentThreshold*5])
+    .range([colorLowRent, '9AB8A6','6F9A80','447C5A',colorHighRent])
 
 var scaleColorIncome = d3.scaleThreshold()
     .domain([incomeThreshold,incomeThreshold*2,incomeThreshold*3,incomeThreshold*4,incomeThreshold*5])
-    .range([colorLowIncome,'#ADC7DE','#8BB0D0','#6899C3',colorHightIncome])
+    .range([colorLowIncome,'#ADC7DE','#8BB0D0','#6899C3',colorHighIncome])
 
 var scaleColorRace = d3.scaleThreshold()
     .domain([0.2,0.4,0.6,0.8,1.0])
-    .range([colorLowRace,'#DC9D9D','#CE7474','#C04B4B',colorHightRace])
+    .range([colorLowRace,'#DC9D9D','#CE7474','#C04B4B',colorHighRace])
+
+var airportText = [
+      {name:'Logan Airport', location:[-71.015, 42.361], color: '#ffffff', size: 14, stroke: true},
+      {name:'Logan Airport', location:[-71.015, 42.361], color: '#666666', size: 14, stroke: false}      
+    ];
 
 //Set ScrollMagic controller
 var controller = new ScrollMagic.Controller();
@@ -41,13 +54,7 @@ $('#plot').affix({
     }
 });
 
-//texture
-// var t = textures.lines()
-//   .thicker();
-
-// plot.call(t);
-
-
+//import data
 d3.queue()
   .defer(d3.csv,'data/eviction_EB_latlong.csv', parseEviction)
   .defer(d3.csv,'data/demographic_data.csv', parseDemo)
@@ -84,19 +91,41 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 	        .append('path')
 	        .attr('class','censusTract')
 	        .attr('d',path)
-		    .style('fill',function(d){
-		    	 var incomeMapping = dataMapping.get(d.properties.geoid).median_household_income
-		    	 //var raceMapping = dataMapping.get(d.properties.geoid).percentage_hispanic_latino
-                 return scaleColorIncome(incomeMapping);
-		    })
 		    .style('stroke-width','1.5px')
 		    .style('stroke','white')
+            .style('fill','none')
 		    .style('opacity',0.85);
+
+    //Plot the text of airport
+    plot.append('g')
+        .attr('class','airportText')
+        .attr('transform','translate(-75,3100)')
+            .selectAll('.airport')
+            .data(airportText)
+            .enter()
+            .append('text')
+            .attr('class','airport')
+            .text(function(d){return d.name})
+            .attr('transform',function(d){
+                var xy = projection(d.location);
+                return 'translate('+xy[0]+','+xy[1]+')';
+            })
+            .style('text-anchor','middle')
+            .style('font-size', function(d){return d.size})
+            .style('font-family', 'BentonSansCond-Regular')
+            .style('stroke-width', function(d){
+                if(d.stroke == true){
+                    return '2px'
+                } else {
+                    return '0px'
+                }
+            })
+            .style('stroke', '#ffffff')
+            .style('fill', function(d){return d.color})
+            .style('visibility','hidden')
 
     reason = d3.nest().key(function(d){return d.reason})
         .entries(eviction);
-
-    console.log(reason);
 
     //TEXT for reason
     plot.append('text')
@@ -154,8 +183,7 @@ function dataLoaded(err, eviction, demo, geo, bos) {
         .style('fill','#111')
         .style('opacity',0.6);
 
-
-    //Scene of all
+    //Scene of all evictions
     var sceneA = new ScrollMagic.Scene({
     	  triggerElement: '#trigger-1', 
     	  triggerHook: 0,
@@ -193,7 +221,8 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 
            d3.select('#plot').classed('fixed',true);
            d3.selectAll('.reasonText').style('visibility','visible');
-           d3.select('#key_income').style('visibility','hidden');
+           d3.select('.key').style('visibility','hidden');
+           d3.selectAll('.airport').style('visibility','hidden');
 
     	   d3.select('.baseMap')
     	     .transition().duration(500)
@@ -210,48 +239,51 @@ function dataLoaded(err, eviction, demo, geo, bos) {
 
 		    console.log('Trigger 2')
         })
-
+    
+    //Rent
     var sceneC = new ScrollMagic.Scene({
-    	  triggerElement: '#trigger-3', 
-    	  triggerHook: 0,
-    	  reverse: true
+          triggerElement: '#trigger-3', 
+          triggerHook: 0,
+          reverse: true
         })
         // .addIndicators()
         .on('start', function(){
 
            d3.selectAll('.reasonText').style('visibility','hidden');
-           d3.select('#key_income').style('visibility','visible');
+           d3.select('#key_rent').style('visibility','visible')
+           d3.select('#key_income').style('visibility','hidden');
            d3.select('#key_race').style('visibility','hidden');
+           d3.selectAll('.airport').style('visibility','visible');
 
-    	   d3.select('.baseMap')
-    	     .transition().duration(500)
-    	     .style('opacity',1)
-    	   
-    	   d3.select('.censusMap')
-    	     .transition().duration(500)
-    	     .style('opacity',1)
-
-    	   plot.selectAll('.censusTract')
-    	       .transition().duration(500)
-    	       .style('fill',function(d){
-		    	 var incomeMapping = dataMapping.get(d.properties.geoid).median_household_income
-                 console.log(incomeMapping)
-                 if(incomeMapping == 0){
-                   return '#d3d3d3';
-                 } else {
-                   return scaleColorIncome(incomeMapping);
-                 }
-		        })
+           d3.select('.baseMap')
+             .transition().duration(500)
+             .style('opacity',1)
+           
+           d3.select('.censusMap')
+             .transition().duration(500)
+             .style('opacity',0.85)
 
            plot.selectAll('circle')
                .transition().duration(500)
                .attr('cx',function(d){return d.x-75})
                .attr('cy',function(d){return d.y+3100})
 
-		    console.log('Trigger 3')
+           plot.selectAll('.censusTract')
+               .style('fill','none')
+               .transition().duration(500)
+               .style('fill',function(d){
+                     var rentMapping = dataMapping.get(d.properties.geoid).median_gross_rent
+                     if(rentMapping == 0){
+                       return '#d3d3d3';
+                     } else {
+                       return scaleColorRent(rentMapping);
+                     }
+                });
+
+            console.log('Trigger 3')
         })
 
-
+    //Income
     var sceneD = new ScrollMagic.Scene({
     	  triggerElement: '#trigger-4', 
     	  triggerHook: 0,
@@ -260,6 +292,47 @@ function dataLoaded(err, eviction, demo, geo, bos) {
         // .addIndicators()
         .on('start', function(){
 
+           d3.select('#key_income').style('visibility','visible');
+           d3.select('#key_race').style('visibility','hidden');
+           d3.select('#key_rent').style('visibility','hidden')
+
+    	   d3.select('.baseMap')
+    	     .transition().duration(500)
+    	     .style('opacity',1)
+    	   
+    	   d3.select('.censusMap')
+    	     .transition().duration(500)
+    	     .style('opacity',0.85)
+
+           plot.selectAll('circle')
+               .transition().duration(500)
+               .attr('cx',function(d){return d.x-75})
+               .attr('cy',function(d){return d.y+3100})
+
+    	   plot.selectAll('.censusTract')
+    	       .transition().duration(500)
+    	       .style('fill',function(d){
+    		    	 var incomeMapping = dataMapping.get(d.properties.geoid).median_household_income
+                     if(incomeMapping == 0){
+                       return '#d3d3d3';
+                     } else {
+                       return scaleColorIncome(incomeMapping);
+                     }
+		        })
+
+		    console.log('Trigger 4')
+        })
+
+    //Race
+    var sceneE = new ScrollMagic.Scene({
+    	  triggerElement: '#trigger-5', 
+    	  triggerHook: 0,
+    	  reverse: true
+        })
+        // .addIndicators()
+        .on('start', function(){
+
+           d3.select('#key_rent').style('visibility','hidden');
            d3.select('#key_income').style('visibility','hidden');
            d3.select('#key_race').style('visibility','visible');
 
@@ -269,7 +342,12 @@ function dataLoaded(err, eviction, demo, geo, bos) {
     	   
     	   d3.select('.censusMap')
     	     .transition().duration(500)
-    	     .style('opacity',1)
+    	     .style('opacity',0.85)
+
+           plot.selectAll('circle')
+               .transition().duration(500)
+               .attr('cx',function(d){return d.x-75})
+               .attr('cy',function(d){return d.y+3100})
 
     	   plot.selectAll('.censusTract')
     	       .transition().duration(500)
@@ -281,18 +359,11 @@ function dataLoaded(err, eviction, demo, geo, bos) {
                       return scaleColorRace(raceMapping);
                     }
 		       })
-    	   plot.selectAll('circle')
-               .transition().duration(500)
-               .attr('cx',function(d){return d.x-75})
-               .attr('cy',function(d){return d.y+3100})
 
-		    console.log('Trigger 4')
+		    console.log('Trigger 5')
         })
 
-
-    controller.addScene([sceneA, sceneB, sceneC, sceneD]);
-
-
+    controller.addScene([sceneA, sceneB, sceneC, sceneD, sceneE]);
 
 }
 
@@ -319,7 +390,8 @@ function parseDemo(d){
 		geoid: d['geoid'],
 		name: d['name'],
 		median_household_income: +d['median_household_income'],
-		percentage_hispanic_latino: +d['percentage_hispanic_latino']
+		percentage_hispanic_latino: +d['percentage_hispanic_latino'],
+        median_gross_rent: +d['median_gross_rent']
 	}
 }
 

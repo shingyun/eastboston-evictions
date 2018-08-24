@@ -68,9 +68,15 @@ img.key {
   width: 270px;
   top: 50px;
   visibility: hidden;
+  opacity: 0.85
 }
 
 p.source {
   bottom: 30px;
 }
 
+/*.airport {
+    stroke: white;
+    stroke-width: 0.5px;
+    opacity: 0.5;
+}*/
